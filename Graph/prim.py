@@ -16,7 +16,8 @@ def Prim(G,r):
     for i in range(1, V):
         if parent[i] is not None:
             print(f"{parent[i]} - {i}, weight: {costs[i]}")
-def extractMin(G,S,costs):
+            
+def extractMin(G,S,costs): # 집합 G에서 S에 포함되지 않은 점정 줌 costs가 가장 작은 정점 u를 리턴한다.
     min_cost = float('inf')
     min_vertex = None
 
@@ -25,7 +26,6 @@ def extractMin(G,S,costs):
             min_cost = costs[v]
             min_vertex = v
     return min_vertex
-    
     
 # 그래프 정의 (인접 리스트 형태)
 graph = {
