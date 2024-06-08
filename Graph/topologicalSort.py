@@ -3,7 +3,7 @@ def dfs(v, visited, stack, graph):
     for neighbor, weight in graph[v]:
         if not visited[neighbor]:
             dfs(neighbor, visited, stack, graph)
-    #stack.append(v)  # 현재 노드를 스택에 추가
+    stack.append(v)  # 현재 노드를 스택에 추가
 
 def topological_sort(graph):
     visited = {node: False for node in graph}
