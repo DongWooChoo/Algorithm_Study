@@ -1,27 +1,24 @@
-def bellman_ford(graph, r):
-    # 그래프의 정점 수 만큼 거리 정보를 무한대로 초기화
-    distance = {vertex: float('inf') for vertex in graph}
-    # 시작 정점의 거리를 0으로 초기화
-    distance[r] = 0
+def floyd_warshall_with_adj_list(graph, n):
+    # 최단 거리 초기화
+    dist = [[float('inf')] * n for _ in range(n)]
+    for u in range(n):
+        dist[u][u] = 0  # 자기 자신으로의 거리는 0
 
-    # 정점 수 - 1 만큼 반복
-    for _ in range(len(graph) - 1):
-        # 그래프의 모든 간선에 대해 반복
-        for u in graph:
-            for v, weight in graph[u]:
-                # 간선을 따라 갈 때 거리가 더 짧아지는 경우, 거리를 업데이트
-                if distance[u] + weight < distance[v]:
-                    distance[v] = distance[u] + weight
-
-    # 음의 사이클 존재 여부를 검사하는 부분
+    # 그래프의 초기 간선 가중치로 최단 거리 테이블 초기화
     for u in graph:
         for v, weight in graph[u]:
-            if distance[u] + weight < distance[v]:
-                print("Graph contains negative weight cycle")
-                return None
+            dist[u][v] = weight
 
-    return distance
+    # 플로이드-워셜 알고리즘 실행
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][j] > dist[i][k] + dist[k][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
 
+    return dist
+
+# 예제 그래프 (인접 리스트 형식)
 graph = {
     0: [(1, 2), (3, 6)],
     1: [(0, 2), (2, 3), (3, 8), (4, 5)],
@@ -30,6 +27,12 @@ graph = {
     4: [(1, 5), (2, 7), (3, 9)]
 }
 
-# 벨만-포드 알고리즘 실행 (시작 정점 0)
-result = bellman_ford(graph, 0)
-print(result)
+# 그래프의 노드 수
+n = len(graph)
+
+# 플로이드-워셜 알고리즘 실행
+distances = floyd_warshall_with_adj_list(graph, n)
+
+# 결과 출력
+for i in range(n):
+    print(f"정점 {i}부터의 거리: {distances[i]}")
