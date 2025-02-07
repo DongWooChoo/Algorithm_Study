@@ -13,7 +13,8 @@ namespace softeer
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
             // n의 개수
             int n = int.Parse(reader.ReadLine());
-            List<int> big_values = new List<int>(n*n);
+            // 등비수열만큼의 개수만 허용
+            List<int> big_values = new List<int>(n*(n+1)/2);
             
             for(int i = 0; i < n; i++){
                 // 입력한 값을 배열에다가 담음
